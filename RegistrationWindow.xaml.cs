@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace WPFLabs
 {
     /// <summary>
-    /// Interaction logic for RegistrationWindow.xaml
+    /// Interaction logic for RegistrationWindow.xamlь
     /// </summary>
     public partial class RegistrationWindow : Window
     {
