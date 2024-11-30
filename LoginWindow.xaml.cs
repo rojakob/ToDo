@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPFLabs.Repository;
 
 namespace WPFLabs
 {
@@ -29,21 +30,19 @@ namespace WPFLabs
         {
             var email = EmailTextBox.Text;
             var password = PasswordTextBox.Password;
+            var user = UserRepository.AuthenticateUser(email, password);
 
-            if (!new Validator(email, Validator.ValidationType.Email).IsValid())
+            if (user != null)
             {
-                MessageBox.Show("Неверный формат Email!", "Ошибка синтаксиса", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                MessageBox.Show("Авторизация прошла успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                new MainEmptyWindow().Show();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Неверный логин или пароль!", "Ошибка авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            if (!new Validator(password, Validator.ValidationType.Password).IsValid())
-            {
-                MessageBox.Show("Недопустимый пароль!", "Ошибка синтаксиса", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            new MainEmptyWindow().Show();
-            Close();
         }
 
         private void RegistrationWindow_Click(object sender, RoutedEventArgs e)

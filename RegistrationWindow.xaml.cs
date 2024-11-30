@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Todo.Entities;
+using WPFLabs.Repository;
 
 namespace WPFLabs
 {
@@ -38,26 +40,19 @@ namespace WPFLabs
                 return;
             }
 
-            if (!new Validator(email, Validator.ValidationType.Email).IsValid())
+            var user = new UserModel { Email = email, Name = name, Password = password };
+            if (UserRepository.RegisterUser(user))
             {
-                MessageBox.Show("Неверный формат Email!", "Ошибка синтаксиса", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                MessageBox.Show("Регистрация прошла успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                new MainEmptyWindow().Show();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Ошибка при регистрации. Некорректный адрес электронной почты.", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            if (!new Validator(password, Validator.ValidationType.Password).IsValid())
-            {
-                MessageBox.Show("Недопустимый пароль!", "Ошибка синтакисиса", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            if (!new Validator(name, Validator.ValidationType.Name).IsValid())
-            {
-                MessageBox.Show("Недопустимое имя!", "Ошибка синтаксиса", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            new MainEmptyWindow().Show();
-            Close();
+            
         }
     }
 }

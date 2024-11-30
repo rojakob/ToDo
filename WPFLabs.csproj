@@ -23,6 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Todo.Entities\Todo.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="logo.png" />
   </ItemGroup>
 
